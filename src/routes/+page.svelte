@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+
 	let username = 'emilys';
 	let password = 'emilyspass';
 
@@ -15,6 +17,7 @@
 		});
 		const data = await resp.json();
 		document.cookie = `access_token=${data.accessToken}`;
+		goto('/welcome');
 	};
 </script>
 

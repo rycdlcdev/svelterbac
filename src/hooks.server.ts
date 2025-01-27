@@ -18,20 +18,21 @@ export const handle: Handle = async ({ event, resolve }) => {
 		return userData;
 	};
 
-	console.log('fetching user data from hookserver', await fetchUserData());
+	console.log(
+		'fetching user data from hookserver',
+		await fetchUserData().then((res) => (event.locals.user = res))
+	);
 
 	// Lógica de redirección
-	if (requestedPath === '/') {
+	/* if (requestedPath === '/') {
 		console.log('Redirecting to /login');
 		throw redirect(303, '/login');
-	}
-	if ((requestedPath === '/' || requestedPath === '/login') && accessToken) {
-		console.log('Redirecting to /dashboard');
-		throw redirect(303, '/dashboard');
+	} */
+	if (requestedPath === '/' && accessToken) {
+		throw redirect(303, '/welcome');
 	}
 	if (!accessToken && event.route.id?.startsWith('/(protected)')) {
-		console.log('Redirecting to /login due to missing token');
-		throw redirect(303, '/login');
+		throw redirect(303, '/');
 	}
 
 	const response = await resolve(event);

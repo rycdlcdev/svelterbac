@@ -1,6 +1,9 @@
 export const ROLES = {
 	ADMIN: 'admin',
-	CUSTOMER: 'customer'
+	CASHIER: 'cashier',
+	RRHH: 'rrhh',
+	WAITER: 'waiter',
+	CHEF: 'chef'
 };
 
 export const PERMISSIONS = {

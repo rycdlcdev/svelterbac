@@ -8,7 +8,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 	// get access token from cookies
 	const accessToken = event.cookies.get('token');
 
-	console.log('access token:', accessToken);
 	if (accessToken) {
 		try {
 			const decodedToken = jwt.decode(accessToken);
@@ -18,7 +17,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 					role: decodedToken.role
 				};
 			}
-			console.log('decoded token:', decodedToken);
 		} catch (error) {
 			console.error('Failed to decode token:', error);
 		}

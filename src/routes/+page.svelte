@@ -19,8 +19,7 @@
 		});
 
 		const data = await resp.json();
-		console.log('Data', data.user);
-		//document.cookie = `access_token=${data.accessToken}`;
+		//document.cookie = `access_token=${data.accessToken}`; // No recomendado porque podrian tener acceso desde javascript cliente
 		user.set({ ...data.user });
 		goto('/welcome');
 	};

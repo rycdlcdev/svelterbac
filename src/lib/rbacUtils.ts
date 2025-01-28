@@ -5,9 +5,6 @@ export function checkRole(user: any, requiredRole: any) {
 	if (!user) {
 		return false;
 	}
-	console.log('user:', user);
-	console.log('requiredRole:', requiredRole);
-
 	return user.role === requiredRole;
 }
 

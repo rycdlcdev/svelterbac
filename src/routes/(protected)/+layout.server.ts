@@ -5,12 +5,12 @@ import { ROLES } from '$lib/constants';
 //{ session: { cookie } }
 /** @type {import('./$types').LayoutServerLoad} */
 export function load({ locals, cookies }) {
-	console.log('sever', cookies.get('token'));
+	const token = cookies.get('token');
 
 	const user = locals.user;
 	const isAdmin = checkRole(user, ROLES.ADMIN);
 
-	if (!isAdmin) {
+	if (!token) {
 		throw redirect(307, '/unauthorized');
 	}
 	return {

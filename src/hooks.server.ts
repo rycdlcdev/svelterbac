@@ -1,5 +1,5 @@
 import { redirect, type Handle } from '@sveltejs/kit';
-//import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const requestedPath = event.url.pathname;
@@ -10,34 +10,25 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	console.log('access token:', accessToken);
 	if (accessToken) {
-		/* const fetchUserData = async () => {
-			const userData = await fetch('http://localhost:3001/me', {
-				method: 'GET',
-				credentials: 'include'
-				headers: {
-				Authorization: `Bearer ${accessToken}`
-			}
-			}).then(async (res) => await res.json());
-
-			return userData;
-		};
-
-		const test = await fetchUserData();
-		console.log('test:', test); */
-		/* try {
+		try {
 			const decodedToken = jwt.decode(accessToken);
-			event.locals.user = decodedToken;
+			if (decodedToken && typeof decodedToken !== 'string') {
+				event.locals.user = {
+					username: decodedToken.username,
+					role: decodedToken.role
+				};
+			}
 			console.log('decoded token:', decodedToken);
 		} catch (error) {
 			console.error('Failed to decode token:', error);
-		} */
+		}
 	}
 
 	//await fetchUserData().then((res) => (event.locals.user = res));
-	event.locals.user = {
+	/* event.locals.user = {
 		username: 'admin',
 		role: 'admin'
-	};
+	}; */
 
 	if (requestedPath === '/' && accessToken) {
 		console.log('redirecting to /welcome');

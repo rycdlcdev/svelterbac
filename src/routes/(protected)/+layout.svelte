@@ -1,7 +1,7 @@
 <script lang="ts">
 	export let session: any; // Puedes personalizar esto según cómo manejes tus sesiones
 
-	import { page } from '$app/state';
+	import { page } from '$app/state'; // Importa el objeto page del estado global (aqui esta locals)
 	import { checkRole } from '$lib/rbacUtils';
 	import { ROLES } from '$lib/constants';
 	import { user } from '$stores/userStore';

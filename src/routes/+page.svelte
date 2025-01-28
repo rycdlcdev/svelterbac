@@ -2,8 +2,8 @@
 	import { goto } from '$app/navigation';
 	import { user } from '$stores/userStore';
 
-	let username = 'emilys';
-	let password = 'emilyspass';
+	let username = 'admin';
+	let password = 'admin123';
 
 	const handleSubmit = async (event: any) => {
 		event.preventDefault();

@@ -1,22 +1,27 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { user } from '$stores/userStore';
 
 	let username = 'emilys';
 	let password = 'emilyspass';
 
 	const handleSubmit = async (event: any) => {
 		event.preventDefault();
-		const resp = await fetch('https://dummyjson.com/auth/login', {
+		const resp = await fetch('http://localhost:3001/login', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
+			credentials: 'include',
 			body: JSON.stringify({
 				username,
 				password
 			})
 			//credentials: 'include' // Include cookies (e.g., accessToken) in the request
 		});
+
 		const data = await resp.json();
-		document.cookie = `access_token=${data.accessToken}`;
+		console.log('Data', data.user);
+		//document.cookie = `access_token=${data.accessToken}`;
+		user.set({ ...data.user });
 		goto('/welcome');
 	};
 </script>

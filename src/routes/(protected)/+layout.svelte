@@ -1,11 +1,18 @@
 <script lang="ts">
 	export let session: any; // Puedes personalizar esto según cómo manejes tus sesiones
 
+	import { page } from '$app/state';
 	import { checkRole } from '$lib/rbacUtils';
 	import { ROLES } from '$lib/constants';
 	import { user } from '$stores/userStore';
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
 
 	$: isAdmin = checkRole($user, ROLES.ADMIN);
+
+	onMount(() => {
+		console.log(page.data.user.role, 'page data locals');
+	});
 
 	// Lógica para colapsar/expandir el sidebar
 	let sidebarCollapsed = false;
@@ -19,11 +26,11 @@
 	<aside class={`sidebar ${sidebarCollapsed ? 'collapsed' : ''}`}>
 		<ul>
 			{#if isAdmin}
-				<li on:click={() => console.log('Admin clicked')}>Admin</li>
+				<li>Admin</li>
 			{/if}
-			<li on:click={() => console.log('Dashboard clicked')}>Dashboard</li>
-			<li on:click={() => console.log('Users clicked')}>Users</li>
-			<li on:click={() => console.log('Settings clicked')}>Settings</li>
+			<li>Dashboard</li>
+			<li>Users</li>
+			<li>Settings</li>
 		</ul>
 	</aside>
 
@@ -37,6 +44,18 @@
 			<div>Admin Panel</div>
 			<div>
 				<span>{session?.user?.name || 'Guest'}</span>
+				<button
+					on:click={async () => {
+						const resp = await fetch('http://localhost:3001/logout', {
+							credentials: 'include',
+							method: 'POST'
+						});
+						if (resp.ok) {
+							user.set(null);
+							goto('/');
+						}
+					}}>logout</button
+				>
 			</div>
 		</header>
 
